@@ -38,3 +38,28 @@ export interface OhlcTick {
   /** Close in micro-USD */
   close: bigint;
 }
+
+/** Trade record as returned by backend keeper APIs (JSON-safe strings). */
+export interface KeeperTradeRecordWire {
+  tradeId: string;
+  traderPubkey: string;
+  direction: Direction;
+  entryPrice: string;
+  exitPrice: string;
+  stakeUsdt: string;
+  multiplierBps: number;
+  windowStart: number;
+  windowEnd: number;
+  bandLower: string;
+  bandUpper: string;
+  maxPayoutUsdt: string;
+}
+
+/** OHLC tick as returned by backend keeper APIs (JSON-safe strings). */
+export interface KeeperOhlcTickWire {
+  ts: number;
+  open: string;
+  high: string;
+  low: string;
+  close: string;
+}
