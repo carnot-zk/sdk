@@ -3,11 +3,16 @@
     "target": "ES2021",
     "module": "commonjs",
     "lib": ["ES2021"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "outDir": "./dist"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
