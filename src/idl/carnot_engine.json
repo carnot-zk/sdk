@@ -1,5 +1,5 @@
 {
-  "address": "cartX31ocscytAK988e5h1xAMAeNXt6zqdgeyr3pZ3U",
+  "address": "carCrmy6qN8tRgvUp9v6JrfUuxroGrKdndUdwMMNumS",
   "metadata": {
     "name": "carnot_engine",
     "version": "0.1.0",
@@ -282,9 +282,6 @@
         },
         {
           "name": "claim_receipt",
-          "docs": [
-            "Created once per (batch_id, trade_id). Re-init fails → double-claim rejected."
-          ],
           "writable": true,
           "pda": {
             "seeds": [
@@ -2003,19 +2000,6 @@
       ]
     },
     {
-      "name": "TradePlaced",
-      "discriminator": [
-        86,
-        63,
-        114,
-        34,
-        82,
-        86,
-        59,
-        156
-      ]
-    },
-    {
       "name": "TraderDeposited",
       "discriminator": [
         26,
@@ -2063,142 +2047,100 @@
     },
     {
       "code": 6001,
-      "name": "StaleOracle",
-      "msg": "STALE_ORACLE_DATA"
-    },
-    {
-      "code": 6002,
-      "name": "ReplayAttack",
-      "msg": "REPLAY_ATTACK_DETECTED"
-    },
-    {
-      "code": 6003,
       "name": "BatchTooSoon",
       "msg": "BATCH_SUBMITTED_TOO_SOON"
     },
     {
-      "code": 6004,
+      "code": 6002,
       "name": "Paused",
       "msg": "PROGRAM_IS_PAUSED"
     },
     {
-      "code": 6005,
+      "code": 6003,
       "name": "InsufficientSolvency",
       "msg": "INSUFFICIENT_SOLVENCY_RATIO"
     },
     {
-      "code": 6006,
+      "code": 6004,
       "name": "InsufficientShares",
       "msg": "INSUFFICIENT_LP_SHARES"
     },
     {
-      "code": 6007,
-      "name": "NothingToWithdraw",
-      "msg": "NOTHING_TO_WITHDRAW"
-    },
-    {
-      "code": 6008,
+      "code": 6005,
       "name": "ExceedsWithdrawableBalance",
       "msg": "WITHDRAWAL_AMOUNT_EXCEEDS_WITHDRAWABLE_BALANCE"
     },
     {
-      "code": 6009,
+      "code": 6006,
       "name": "Unauthorized",
       "msg": "UNAUTHORIZED"
     },
     {
-      "code": 6010,
+      "code": 6007,
       "name": "InvalidMarketRegime",
       "msg": "INVALID_MARKET_REGIME"
     },
     {
-      "code": 6011,
+      "code": 6008,
       "name": "InvalidAmount",
       "msg": "INVALID_AMOUNT"
     },
     {
-      "code": 6012,
+      "code": 6009,
       "name": "TimelockNotExpired",
       "msg": "LP_WITHDRAWAL_TIMELOCK_NOT_EXPIRED"
     },
     {
-      "code": 6013,
+      "code": 6010,
       "name": "InsufficientAvailableMargin",
       "msg": "INSUFFICIENT_AVAILABLE_TRADER_MARGIN"
     },
     {
-      "code": 6014,
-      "name": "TradeAlreadyClosed",
-      "msg": "TRADE_ALREADY_SETTLED_OR_EXPIRED"
-    },
-    {
-      "code": 6015,
-      "name": "TradeStillActive",
-      "msg": "TRADE_WINDOW_HAS_NOT_ENDED_YET"
-    },
-    {
-      "code": 6016,
-      "name": "InvalidTradeOwner",
-      "msg": "INVALID_TRADE_OWNER"
-    },
-    {
-      "code": 6017,
+      "code": 6011,
       "name": "InvalidPoolBalance",
       "msg": "INVALID_POOL_BALANCE_COMMITMENT"
     },
     {
-      "code": 6018,
+      "code": 6012,
       "name": "InvalidPriceHash",
       "msg": "INVALID_ORACLE_PRICE_HASH"
     },
     {
-      "code": 6019,
+      "code": 6013,
       "name": "InvalidGroth16Input",
       "msg": "INVALID_GROTH16_VERIFIER_INPUT"
     },
     {
-      "code": 6020,
+      "code": 6014,
       "name": "InvalidOracleAccount",
       "msg": "INVALID_ORACLE_ACCOUNT"
     },
     {
-      "code": 6021,
+      "code": 6015,
       "name": "ArithmeticOverflow",
       "msg": "ARITHMETIC_OVERFLOW"
     },
     {
-      "code": 6022,
-      "name": "MissingBump",
-      "msg": "MISSING_BUMP_IN_ACCOUNT_CONTEXT"
-    },
-    {
-      "code": 6023,
+      "code": 6016,
       "name": "BatchNotSettled",
       "msg": "BATCH_HAS_NOT_SETTLED_YET"
     },
     {
-      "code": 6024,
+      "code": 6017,
       "name": "InvalidBatch",
       "msg": "BATCH_ID_DOES_NOT_MATCH_TRADE_BATCH"
     },
     {
-      "code": 6025,
+      "code": 6018,
       "name": "InvalidMerkleProof",
       "msg": "INVALID_MERKLE_PROOF_FOR_PAYOUT_CLAIM"
-    },
-    {
-      "code": 6026,
-      "name": "NegativeBandPrice",
-      "msg": "BAND_PRICES_MUST_BE_NON_NEGATIVE"
     }
   ],
   "types": [
     {
       "name": "BatchReceiptAccount",
       "docs": [
-        "Permanent on-chain transparency ledger for every settled batch.",
-        "Seeded by [BATCH_SEED, batch_id]. Anyone can query this account to",
-        "independently verify all settlement claims without re-running the proof."
+        "On-chain audit record for each settled batch. Seeded by [BATCH_SEED, batch_id]."
       ],
       "type": {
         "kind": "struct",
@@ -2652,44 +2594,13 @@
       }
     },
     {
-      "name": "TradePlaced",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "trader",
-            "type": "pubkey"
-          },
-          {
-            "name": "trade_id",
-            "type": "u64"
-          },
-          {
-            "name": "stake_usdt",
-            "type": "u64"
-          },
-          {
-            "name": "max_payout_usdt",
-            "type": "u64"
-          },
-          {
-            "name": "window_end",
-            "type": "i64"
-          }
-        ]
-      }
-    },
-    {
       "name": "TraderAccount",
       "docs": [
-        "Single-balance trader account. All amounts are in micro-USDT (6 decimals).",
+        "All amounts are in micro-USDT (6 decimals).",
         "`balance_usdt` = deposited - settled_losses + settled_winnings - withdrawn.",
         "`locked_usdt`  = sum of open trade stakes; keeper increments on trade acceptance,",
         "distribute_winnings decrements on settlement.",
-        "Withdrawable = balance_usdt - locked_usdt.",
-        "Updated by: trader_deposit (+balance), distribute_winnings (net balance, -locked),",
-        "trader_withdraw (-balance), lock_margin (+locked), unlock_margin (-locked).",
-        "_reserved2 pads to 65 bytes to match accounts created by the prior layout."
+        "`_reserved2` pads to 65 bytes to match accounts created by the prior layout."
       ],
       "type": {
         "kind": "struct",
